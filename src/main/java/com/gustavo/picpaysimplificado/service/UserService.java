@@ -1,11 +1,10 @@
 package com.gustavo.picpaysimplificado.service;
 
 import com.gustavo.picpaysimplificado.DTO.UserDTO;
-import com.gustavo.picpaysimplificado.entity.User;
+import com.gustavo.picpaysimplificado.entity.User.User;
 import com.gustavo.picpaysimplificado.mapper.UserMapper;
 import com.gustavo.picpaysimplificado.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

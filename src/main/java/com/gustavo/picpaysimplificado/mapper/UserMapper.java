@@ -1,7 +1,7 @@
 package com.gustavo.picpaysimplificado.mapper;
 
 import com.gustavo.picpaysimplificado.DTO.UserDTO;
-import com.gustavo.picpaysimplificado.entity.User;
+import com.gustavo.picpaysimplificado.entity.User.User;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
