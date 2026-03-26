@@ -1,5 +1,6 @@
-package com.gustavo.picpaysimplificado.entity;
+package com.gustavo.picpaysimplificado.entity.User;
 
+import com.gustavo.picpaysimplificado.entity.Transfer.Transfer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
@@ -26,5 +28,14 @@ public class User {
     private String email;
     private String senha;
     private BigDecimal saldo;
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
+    @OneToMany(mappedBy = "sender")
+    private List<Transfer> sentTransfers;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Transfer> receivedTransfers;
 
 }
