@@ -26,6 +26,7 @@ public class User {
     private Long document;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String senha;
     private BigDecimal saldo;
 
