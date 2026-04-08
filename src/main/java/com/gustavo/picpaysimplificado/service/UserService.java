@@ -47,6 +47,10 @@ public class UserService {
         if(userAtt.getEmail() != request.email()) {
             userAtt.setEmail(request.email());
         }
+        if(userAtt.getUserType() != request.userType()) {
+            userAtt.setUserType(request.userType());
+        }
+
         return userMapper.toDTO(repository.save(userAtt));
     }
 

@@ -15,7 +15,8 @@ public class UserMapper {
             user.setEmail(userDTO.email());
             user.setSenha(userDTO.senha());
             user.setDocument(userDTO.document());
-            user.setSaldo(BigDecimal.ZERO); // Inicializa o saldo com zero
+            user.setSaldo(BigDecimal.ZERO);
+            user.setUserType(userDTO.userType());
             return user;
     }
 
@@ -24,7 +25,8 @@ public class UserMapper {
                 user.getNome(),
                 user.getEmail(),
                 user.getSenha(),
-                user.getDocument()
+                user.getDocument(),
+                user.getUserType()
         );
     }
 }
