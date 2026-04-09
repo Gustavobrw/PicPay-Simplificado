@@ -18,6 +18,23 @@ public class UserService {
 
     private final UserRepository repository;
 
+    public void  validateTransfer(User sender, BigDecimal amount) throws Exception {
+        if(sender.getUserType() == UserType.LOJISTA){
+            throw new Exception("Usuário do tipo lojista não pode realizar transferências");
+        }
+
+        if(sender.getSaldo().compareTo(amount) < 0){
+            throw new Exception("Saldo insuficiente para realizar a transferência");
+        }
+    }
+
+    public User findUserById(Long id) throws Exception {
+        return repository.findUserById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
+    public void saveUser(User user){
+        repository.save(user);
+    }
 
 
 }
