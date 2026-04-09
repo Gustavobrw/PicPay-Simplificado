@@ -1,5 +1,6 @@
 package com.gustavo.picpaysimplificado.entity.User;
 
+import com.gustavo.picpaysimplificado.DTO.UserDTO;
 import com.gustavo.picpaysimplificado.entity.Transfer.Transfer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,5 +39,14 @@ public class User {
 
     @OneToMany(mappedBy = "receiver")
     private List<Transfer> receivedTransfers;
+
+    public  User(UserDTO data){
+        this.nome = data.nome();
+        this.document = data.document();
+        this.email = data.email();
+        this.senha = data.senha();
+        this.saldo = data.saldo();
+        this.userType = UserType.USUARIO;
+    }
 
 }
