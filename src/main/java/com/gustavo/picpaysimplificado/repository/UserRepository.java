@@ -3,5 +3,11 @@ package com.gustavo.picpaysimplificado.repository;
 import com.gustavo.picpaysimplificado.entity.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findUserByDocument(String document);
+
+    Optional<User> findUserById(Long id);
 }
