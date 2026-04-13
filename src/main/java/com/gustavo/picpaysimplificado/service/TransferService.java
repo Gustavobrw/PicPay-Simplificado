@@ -20,15 +20,16 @@ public class TransferService {
     private final TransferRepository repository;
     private final UserService userService;
     private final RestTemplate restTemplate;
+    private final NotificationService notificationService;
 
-    public void createTransfer(TransferDTO transferDTO) throws Exception {
+    public Transfer createTransfer(TransferDTO transferDTO) throws Exception {
         User sender = userService.findUserById(transferDTO.senderId());
         User receiver = userService.findUserById(transferDTO.receiverId());
 
         userService.validateTransfer(sender, transferDTO.value());
 
         boolean isAuthorized = authorizeTransfer(sender, transferDTO.value());
-        if(!isAuthorized){
+        if (!isAuthorized) {
             throw new Exception("Transferência não autorizada");
         }
 
@@ -36,7 +37,7 @@ public class TransferService {
         transfer.setAmount(transferDTO.value());
         transfer.setSender(sender);
         transfer.setReceiver(receiver);
-        transfer.setTimestamp(LocalDateTime.now());
+        transfer.setDate(LocalDateTime.now());
 
         sender.setSaldo(sender.getSaldo().subtract(transferDTO.value()));
         receiver.setSaldo(receiver.getSaldo().add(transferDTO.value()));
@@ -45,18 +46,32 @@ public class TransferService {
         userService.saveUser(sender);
         userService.saveUser(receiver);
 
+        notificationService.sendNotification(sender, "Transação realizada com sucesso!");
+        notificationService.sendNotification(receiver, "Você recebeu uma transferência!");
+
+        return transfer;
+
     }
 
     public Boolean authorizeTransfer(User sender, BigDecimal value) {
-        ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize",Map.class);
+        try {
+            ResponseEntity<Map> response = restTemplate.getForEntity(
+                    "https://util.devi.tools/api/v2/authorize",
+                    Map.class
+            );
 
-    if(authorizationResponse.getStatusCode() == HttpStatus.OK){
-        Map body = authorizationResponse.getBody();
-        Map data = (Map) body.get("data");
-        if(data != null && Boolean.TRUE.equals(data.get("authorized"))){
-            return true;
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                Map body = response.getBody();
+                Map data = (Map) body.get("data");
+
+                return data != null && Boolean.TRUE.equals(data.get("authorization"));
+            }
+
+        } catch (Exception e) {
+            return false;
         }
+
+        return false;
     }
-    return false;
-    }
+
 }
