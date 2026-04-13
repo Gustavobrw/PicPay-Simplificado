@@ -1,5 +1,6 @@
 package com.gustavo.picpaysimplificado.entity.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gustavo.picpaysimplificado.DTO.UserDTO;
 import com.gustavo.picpaysimplificado.entity.Transfer.Transfer;
 import jakarta.persistence.*;
@@ -35,9 +36,11 @@ public class User {
     private UserType userType;
 
     @OneToMany(mappedBy = "sender")
+    @JsonIgnore
     private List<Transfer> sentTransfers;
 
     @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
     private List<Transfer> receivedTransfers;
 
     public  User(UserDTO data){
