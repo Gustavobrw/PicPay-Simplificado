@@ -21,7 +21,7 @@ public class Transfer {
     @Column(nullable = false)
     private BigDecimal amount;
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
