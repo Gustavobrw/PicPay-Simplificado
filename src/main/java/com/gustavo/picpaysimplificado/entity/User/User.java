@@ -49,7 +49,7 @@ public class User {
         this.email = data.email();
         this.senha = data.senha();
         this.saldo = data.saldo();
-        this.userType = UserType.USUARIO;
+        this.userType = data.userType();
     }
 
 }
